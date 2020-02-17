@@ -5,7 +5,8 @@ WORKDIR /go/src/github.com/someproject
 COPY . .
 
 RUN VERSION=$(git rev-parse --short HEAD) CGO_ENABLED=0 go build -ldflags "-X main.version=${VERSION}" -o someproject cmd/*.go
-
+# if you faced some problems with modules
+# RUN VERSION=$(git rev-parse --short HEAD) CGO_ENABLED=0 GO111MODULE=off go build -ldflags "-X main.version=${VERSION}" -o someproject cmd/*.go
 FROM debian:10.1
 
 COPY --from=go-build /go/src/github.com/someproject /etc/someproject
